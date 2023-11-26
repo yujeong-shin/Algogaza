@@ -1,27 +1,24 @@
+import java.util.LinkedList;
+import java.util.Queue;
 import java.util.Scanner;
 
 public class ex2606 {
     static int N, E, count;
     static int[] ch;
     static int[][] graph;
-    /*
-    public static void DFS(int v) {
-        for(int i=1; i<N+1; i++) {
-            if(graph[v][i]==1 && ch[i]==0) {
-                count++;
-                ch[i]=1;
-                DFS(i);
-            }
-        }
-    }
-     */
-
-    public static void DFS(int v) {
+    public static void BFS(int v) {
+        Queue<Integer> Q = new LinkedList<>();
         ch[v]=1;
-        for(int i=1; i<N+1; i++) {
-            if(graph[v][i]==1 && ch[i]==0) {
-                count++;
-                DFS(i);
+        Q.offer(v);
+
+        while(!Q.isEmpty()) {
+            int tmp = Q.poll();
+            for(int j=0; j<N+1; j++) {
+                if(graph[tmp][j]==1 && ch[j]==0) {
+                    count++;
+                    ch[j]=1;
+                    Q.offer(j);
+                }
             }
         }
     }
@@ -37,7 +34,7 @@ public class ex2606 {
             int e = sc.nextInt();
             graph[s][e] = graph[e][s] = 1;
         }
-        ex2606.DFS(1);
+        ex2606.BFS(1);
         System.out.println(count);
     }
 }
