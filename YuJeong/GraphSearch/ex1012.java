@@ -1,5 +1,6 @@
 import java.util.*;
 
+/*
 class Point{
     int x, y;
     Point(int x, int y) {
@@ -7,6 +8,7 @@ class Point{
         this.y = y;
     }
 }
+ */
 public class ex1012 {
     static int M, N, K, count;
     static int[] dx = {-1, 0, 1, 0};
