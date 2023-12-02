@@ -31,21 +31,22 @@ public class ex11724 {
         System.out.println(count);
     }
     public static void Solution() {
+        // 1번 노드부터 N번 노드까지 반복
         for (int i = 1; i < N+1; i++) {
-            for (int j = 1; j < N+1; j++) {
-                if(graph[i][j]==1 && ch[j]==0) {
-                    ch[j]=1;
-                    count++;
-                    DFS(j);
-                }
+            if(ch[i]==0) {
+                count++;
+                DFS(i);
             }
         }
     }
     public static void DFS(int v) {
-        for(int i=0; i<N+1; i++) {
-            if(graph[v][i]==1 && ch[i]==0) {
-                ch[i]=1;
-                DFS(i);
+        if(ch[v]==1) return;
+        else {
+            ch[v]=1;
+            for(int i=0; i<N+1; i++) {
+                if(graph[v][i]==1) {
+                    DFS(i);
+                }
             }
         }
     }
