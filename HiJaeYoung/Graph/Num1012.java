@@ -12,6 +12,7 @@ import java.util.List;
 // 메서드 잘 나눠라 ~
 // 상하좌우 탐색이 필요. 이중배열
 // nm 구분잘하기.^^
+// 인접리스트와 인접행렬의 차이
 public class Num1012 {
     static int[] dx ={1,0,-1,0}, dy ={0,1,0,-1};
     static class node{
