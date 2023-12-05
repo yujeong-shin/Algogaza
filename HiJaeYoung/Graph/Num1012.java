@@ -46,6 +46,7 @@ public class Num1012 {
         }
         System.out.print(sb);
     }
+
     public static int BFS(int[][] map, int max_m,int max_n,List<node> vegs,boolean[][] vist){
         Queue<node> que = new LinkedList<>();
         int answer =0;
