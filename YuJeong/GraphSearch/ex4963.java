@@ -3,13 +3,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.*;
 
-class Point1{
-    int x, y;
-    public Point1(int x, int y) {
-        this.x = x;
-        this.y = y;
-    }
-}
 public class ex4963 {
     static int[] dx = {-1, -1, 0, 1, 1, 1, 0, -1};
     static int[] dy = {0, 1, 1, 1, 0, -1, -1, -1};
@@ -65,16 +58,16 @@ public class ex4963 {
         }
     }
     public static void BFS(int x, int y) {
-        Queue<Point1> Q = new LinkedList<>();
-        Q.offer(new Point1(x, y));
+        Queue<Point> Q = new LinkedList<>();
+        Q.offer(new Point(x, y));
         while(!Q.isEmpty()) {
-            Point1 cur = Q.poll();
+            Point cur = Q.poll();
             for(int i=0; i<8; i++) {
                 int nx = cur.x + dx[i];
                 int ny = cur.y + dy[i];
                 if(nx>=0 && nx<h && ny>=0 && ny<w && graph[nx][ny]==1){
                     graph[nx][ny]=0;
-                    Q.offer(new Point1(nx, ny));
+                    Q.offer(new Point(nx, ny));
                 }
             }
         }
