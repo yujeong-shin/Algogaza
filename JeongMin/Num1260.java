@@ -8,7 +8,7 @@ import java.util.Queue;
 import java.util.Scanner;
 
 
-public class Main {
+public class Num1260 {
 
     // static 변수 생성 
     // 노드 표현을 위한 2차원 배열 treeArray, 노드에 방문했는지 확인을 위한 visited
@@ -114,4 +114,4 @@ public class Main {
 }
 
 
-출처: https://tweety1121.tistory.com/entry/백준-1260번-사탕-게임-자바-풀이 [Pli's 개발일기:티스토리]
+//출처: https://tweety1121.tistory.com/entry/백준-1260번-사탕-게임-자바-풀이 [Pli's 개발일기:티스토리]
