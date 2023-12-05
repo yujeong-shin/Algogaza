@@ -37,6 +37,7 @@ public class Main {
         }
 
         // node가 1부터 시작하기 때문에 N + 1
+	// 총 노드의 개수만큼 visited 배열 크기 지정
         visited = new boolean[N + 1];
         dfs(V);
 
@@ -65,13 +66,18 @@ public class Main {
         // 1. 순환 호출 이용
         // 2. 명시적인 스택 사용
     private static void dfs(int v) {
+	// 첫 노드의 방문 여부 true로 설정 후 시작
         visited[v] = true;
+	// 첫 기준 노드 출력 -> 이후 재귀 함수를 통해 실행 될때마다 출력
         System.out.print(v + " ");
 
+	// 마지막 노드에 도달했을 경우 바로 return
         if(v == treeArray.length) return;
 
+	// 전체 노드의 개수만큼 반복 실행
         for(int j = 1; j < treeArray.length; j++) {
-        	// 연결된 노드인데 방문하지 않은 경우 
+        	// visited[j] == false를 통해 연결된 노드인데 방문하지 않은 경우 
+		// treeArray[v][j]를 통해 기준 노드 v에 노드 j가 연결되어있는지 확인
             if(treeArray[v][j] == 1 && visited[j] == false) {
             	// 연결된 노드 찾으면 재귀함수 호출
                 dfs(j);
@@ -94,18 +100,22 @@ public class Main {
         queue.offer(v);
         visited[v] = true;
 
+	// 첫 시작 기준 노드 출력
         System.out.print(v + " ");
 
+	// queue에 데이터가 없어질 때까지 반복
         while(!queue.isEmpty()) {
             // Queue.poll -> FIFO로 값을 반환받는데 Queue가 비어있을 경우 NULL 반환
             int n = queue.poll();
 
-			// 노드 하나로 연결된 노드 먼저 다 체크 
+		// 노드 하나로 연결된 노드 먼저 다 체크 
             for(int i = 1; i < treeArray.length; i++) {
-           		 // 연결된 노드인데 방문하지 않은 경우 
+           	// 연결된 노드인데 방문하지 않은 경우 
+		// DFS에서와 동일하게 정점 n과 i가 연결이 되어있는지 확인하고 i가 방문하지 않은 상태일 때
                 if(treeArray[n][i] == 1 && visited[i] == false) {
                     visited[i] = true;
                     System.out.print(i + " ");
+		// 다음 기준 노드 변경 (첫 반복문 시작 기준 v -> i)
                     queue.offer(i);
                 }
             }
