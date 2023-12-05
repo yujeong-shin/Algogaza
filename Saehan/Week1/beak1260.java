@@ -9,7 +9,7 @@ public class beak1260 {
 
     static void dfs(int index)
     {
-        System.out.printf(index+" ");
+        System.out.print(index + " ");
         visited[index] = true;
         for (int i=1; i<=N; i++)
         {
@@ -18,11 +18,30 @@ public class beak1260 {
                 dfs(i);
             }
         }
-    };
+    }
     static void bfs()
     {
+        queue = new ArrayList<>();
+        visited = new boolean[1000+1];
+        queue.add(V);
+        visited[V] = true;
 
-    };
+        while (!queue.isEmpty())
+        {
+            int temp = queue.remove(0);
+            System.out.print(temp + " ");
+            for (int i=1; i<=N; i++)
+            {
+                if (!visited[i] && graph[temp][i])
+                {
+                    visited[i] = true;
+                    queue.add(i);
+                }
+            }
+
+        }
+
+    }
 
     public static void main(String[] args) throws  IOException
     {
@@ -33,8 +52,8 @@ public class beak1260 {
         M = Integer.parseInt(st.nextToken());
         V = Integer.parseInt(st.nextToken());
 //        System.out.println(N + " " + M + " " + V);
-        graph = new boolean[1000][1000];
-        visited = new boolean[1000];
+        graph = new boolean[1000+1][1000+1];
+        visited = new boolean[1000+1];
 
         for (int i=0; i < M; i++)
         {
@@ -47,7 +66,6 @@ public class beak1260 {
 
         dfs(V);
         System.out.println();
-
         bfs();
     }
 }
