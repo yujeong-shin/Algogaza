@@ -3,7 +3,7 @@
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class Main {
+public class B_4963 {
 	static int[][] graph;
 	static ArrayList<Integer> list = new ArrayList<>();
 

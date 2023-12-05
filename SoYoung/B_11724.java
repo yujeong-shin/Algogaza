@@ -2,7 +2,7 @@
 
 import java.util.Scanner;
 
-public class Main {
+public class B_11724 {
 	static int[][] graph;
 	static int vertex;
     static int edge;

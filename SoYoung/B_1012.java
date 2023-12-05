@@ -2,7 +2,7 @@
 
 import java.util.Scanner;
 
-public class Main {
+public class B_1012 {
 	static int[][] graph;
 	static int[] result;
 
