@@ -2,7 +2,7 @@
 
 import java.util.Scanner;
 
-public class Main {
+public class B_2606 {
 	static int edge;
 	static int vertex;
 	static int start;

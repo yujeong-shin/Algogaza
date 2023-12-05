@@ -6,7 +6,7 @@ import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Scanner;
 
-public class Main {
+public class B_1260 {
 	static int vertex;
 	static int edge;
 	static int start;
