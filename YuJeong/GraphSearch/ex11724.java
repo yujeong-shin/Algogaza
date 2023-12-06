@@ -1,11 +1,11 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.StringTokenizer;
+import java.util.*;
 
 public class ex11724 {
     static int N, M, count=0;
-    static int[][] graph;
+    static List<List<Integer>> graph;
     static int[] ch;
 
     public static void main(String[] args) throws IOException {
@@ -15,37 +15,42 @@ public class ex11724 {
         StringTokenizer stk = new StringTokenizer(br.readLine());
 
         // 자른거 하나씩 저장
-        N = Integer.parseInt(stk.nextToken());
-        M = Integer.parseInt(stk.nextToken());
+        N = Integer.parseInt(stk.nextToken()); //정점의 개수
+        M = Integer.parseInt(stk.nextToken()); //간선의 개수
 
-        graph = new int[N+1][N+1];
-        ch = new int[N+1];
+        graph = new LinkedList<>();
+        for(int i=0;i<=N;i++){
+            graph.add(new ArrayList<>());
+        }
+
         for(int i=0; i<M; i++){
             StringTokenizer str = new StringTokenizer(br.readLine());
             int a = Integer.parseInt(str.nextToken());
             int b = Integer.parseInt(str.nextToken());
-            graph[a][b] = graph[b][a] = 1;
+            graph.get(a).add(b);
+            graph.get(b).add(a);
         }
-
-        ex11724.Solution();
-        System.out.println(count);
-    }
-    public static void Solution() {
-        // 1번 노드부터 N번 노드까지 반복
-        for (int i = 1; i < N+1; i++) {
-            if(ch[i]==0) {
-                count++;
-                DFS(i);
+        int answer=0;
+        ch = new int[N+1];
+        for(int i=1;i<=N;i++){
+            if(ch[i]==0){
+                ch[i]=1;
+                answer++;
+                BFS(i);
             }
         }
+
+        System.out.println(answer);
     }
-    public static void DFS(int v) {
-        if(ch[v]==1) return;
-        else {
-            ch[v]=1;
-            for(int i=0; i<N+1; i++) {
-                if(graph[v][i]==1) {
-                    DFS(i);
+    public static void BFS(int v){
+        Queue<Integer> Q = new LinkedList<>();
+        Q.add(v);
+        while(!Q.isEmpty()) {
+            int cv = Q.poll();
+            for(int nv : graph.get(cv)) {
+                if(ch[nv]==0) {
+                    ch[nv]=1;
+                    Q.add(nv);
                 }
             }
         }
