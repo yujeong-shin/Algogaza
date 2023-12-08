@@ -1,4 +1,4 @@
-package HiJaeYoung.Graph;
+package HiJaeYoung.Graph.week2;
 // 다중 케이스
 // i <= 300 체스판이라며..ㅠ
 // 나이트의 한 턴의 모든 움직임을 확인 = BFS

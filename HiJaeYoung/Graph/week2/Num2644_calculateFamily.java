@@ -1,4 +1,4 @@
-package HiJaeYoung.Graph;
+package HiJaeYoung.Graph.week2;
 
 // int를 리턴 값으로 BFS 후 -1리턴
 // node에 cnt 가 필요
