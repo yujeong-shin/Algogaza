@@ -4,10 +4,11 @@ import java.io.InputStreamReader;
 import java.util.StringTokenizer;
 
 // M: 총 사람(정점)의 수, A && B: 비교할 두 대상, N: 부모 자식간의 관계(간선 개수)
-public class Q2644 {
-    static int M, A, B, result = 0;
+public class Q2644_1 {
+    static int M, A, B, result = -1;
     static int[][] treeArray;
     static boolean[] visited;
+    static boolean answerfound = false;
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
@@ -28,26 +29,24 @@ public class Q2644 {
             treeArray[mom][son] = treeArray[son][mom] = 1;
         }
 
-        dfs(A);
-        if(!visited[B]) result = -1;
+        dfs(A, 0);
         System.out.println(result);
     }
 
-    private static void dfs(int V){
+    private static void dfs(int V, int count){
         visited[V] = true;
         if(V == B) {
-            for(int i = 1; i < M+1; i++)
-                visited[i] = true;
+            result = count;
+            answerfound = true;
             return;
         }
         for(int i=1; i<M+1; i++){
-            if(treeArray[V][i] == 1 && !visited[i]) {
+            if(treeArray[V][i] == 0) continue;
+            else if(treeArray[V][i] == 1 && visited[i]) continue;
+            else {
                 result++;
-                dfs(i);
-            }
-            else if(i == M && !visited[B]){
-                result = 0;
-                break;
+                dfs(i, count + 1);
+                if(answerfound == true) break;
             }
         }
     }
