@@ -27,6 +27,8 @@ public class ex2644 {
         person1 = Integer.parseInt(st.nextToken()); //촌수를 구해야 할 사람 2명
         person2 = Integer.parseInt(st.nextToken());
         m = Integer.parseInt(bf.readLine()); //부모-자식 관계 개수
+        // 이때 앞에 나오는 번호 x는 뒤에 나오는 정수 y의 부모 번호를 나타낸다.
+        // 각 사람의 부모는 최대 한 명만 주어진다.
         for (int i = 0; i < m; i++) {
             st = new StringTokenizer(bf.readLine());
             int parent = Integer.parseInt(st.nextToken()); //부모
@@ -48,10 +50,10 @@ public class ex2644 {
                     countOfMatch++;
                     answer += child.degreeOfKinship;
                 }
+                if(countOfMatch==2) return answer;
                 Q.add(child);
             }
         }
-        if(countOfMatch==2) return answer;
-        else return -1;
+        return -1;
     }
 }
