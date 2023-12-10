@@ -16,6 +16,7 @@ public class Q2178 {
         W = Integer.parseInt(st.nextToken());
 
         map = new int[H+1][W+1];
+        visited = new boolean[H+1][W+1];
 
         for(int i = 1; i <= H; i++) {
             String str = br.readLine();
@@ -25,6 +26,7 @@ public class Q2178 {
         }
 
         bfs(1,1);
+        System.out.println(count);
     }
 
     private static void bfs(int h, int w){
@@ -38,14 +40,16 @@ public class Q2178 {
             int x = p.x;
             int y = p.y;
 
-            for(int i = 1; i<map.length; i++){
-                if(map[x][y])
+            for(int i = 1; i<=H; i++){
+                for(int j = 1; j<=W; j++){
+                    if(map[x][y] == 1 && !visited[x][y]) {
+                        visited[x][y] = true;
+                        count++;
+                        queue.offer(new Point(i,j));
+                    }
+                }
             }
         }
-
-        System.out.println(p.x);
-        System.out.println(p.y);
-
     }
 }
 
