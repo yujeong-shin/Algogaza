@@ -11,14 +11,14 @@ class Person{
     }
 }
 public class ex2644 {
-    static int m, person1, person2;
+    static int n, m, person1, person2;
     static List<List<Person>> map;
     static int countOfMatch, answer;
     public static void main(String[] args) throws IOException {
         BufferedReader bf = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer st;
 
-        int n = Integer.parseInt(bf.readLine()); //전체 사람 수
+        n = Integer.parseInt(bf.readLine()); //전체 사람 수
         map = new ArrayList<>();
         for (int i = 0; i <= n; i++) { //전체 사람 수만큼 ArrayList 공간 할당
             map.add(new ArrayList<>());
@@ -27,31 +27,31 @@ public class ex2644 {
         person1 = Integer.parseInt(st.nextToken()); //촌수를 구해야 할 사람 2명
         person2 = Integer.parseInt(st.nextToken());
         m = Integer.parseInt(bf.readLine()); //부모-자식 관계 개수
-        // 이때 앞에 나오는 번호 x는 뒤에 나오는 정수 y의 부모 번호를 나타낸다.
-        // 각 사람의 부모는 최대 한 명만 주어진다.
+
         for (int i = 0; i < m; i++) {
             st = new StringTokenizer(bf.readLine());
             int parent = Integer.parseInt(st.nextToken()); //부모
             int child = Integer.parseInt(st.nextToken()); //자식
             map.get(parent).add(new Person(child, 0)); //촌수 값 0 기본 세팅
+            map.get(child).add(new Person(parent, 0));
         }
-        System.out.println(BFS(1));
+        System.out.println(BFS(person1, person2));
     }
-    public static int BFS(int root){
+    public static int BFS(int start, int end){
         Queue<Person> Q = new LinkedList<>();
-        Q.add(new Person(root, 0));
+        boolean[] visit = new boolean[n+1];
+        Q.add(new Person(start, 0));
+        visit[start]=true;
         while(!Q.isEmpty()){
-            Person parent = Q.poll();
-            for(Person child : map.get(parent.number)) {
-                //자식의 depth = 부모 depth+1
-                child.degreeOfKinship = parent.degreeOfKinship+1;
-                //자식이 촌수를 구해야 할 사람에 포함되면 체크
-                if(child.number==person1 || child.number==person2) {
-                    countOfMatch++;
-                    answer += child.degreeOfKinship;
+            Person nowPerson = Q.poll();
+            if(nowPerson.number==end) return nowPerson.degreeOfKinship;
+            for(Person nxtPerson : map.get(nowPerson.number)){
+                if(!visit[nxtPerson.number]) {
+                    visit[nxtPerson.number]=true;
+                    //촌수 계산
+                    nxtPerson.degreeOfKinship = nowPerson.degreeOfKinship+1;
+                    Q.add(nxtPerson);
                 }
-                if(countOfMatch==2) return answer;
-                Q.add(child);
             }
         }
         return -1;
