@@ -4,10 +4,11 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.*;
 
+// visited에 너무 얽매여있지 말 것.
 public class Q2178 {
-    static int H,W, count = 1;
+    static int H,W;
     static int[][] map;
-    static boolean[][] visited;
+    static int[][] distance;
     static int[] dx = {-1,0,0,1};
     static int[] dy = {0,1,-1,0};
     public static void main(String[] args)  throws IOException {
@@ -18,7 +19,7 @@ public class Q2178 {
         W = Integer.parseInt(st.nextToken());
 
         map = new int[H+1][W+1];
-        visited = new boolean[H+1][W+1];
+        distance = new int[H+1][W+1];
 
         for(int i = 1; i <= H; i++) {
             String str = br.readLine();
@@ -27,29 +28,33 @@ public class Q2178 {
             }
         }
 
+        distance[1][1] = 1;
         bfs(1,1);
-        System.out.println(count);
+
+        System.out.println(distance[H][W]);
     }
 
     private static void bfs(int a, int b){
-        Queue queue = new LinkedList<Point>();
-
+        Queue<Point> queue = new LinkedList<Point>();
         queue.offer(new Point(a, b));
-        visited[a][b] = true;
 
         while(!queue.isEmpty()){
             Point p = (Point)queue.poll();
             int h = p.x;
             int w = p.y;
-            if(h == H && w == W) break;
+            if(h == H && w == W){
+                break;
+            }
 
             for(int i=0; i<4; i++){
                 int next_h = h+dy[i];
                 int next_w = w+dx[i];
 
-                if(next_h>=0 && next_h<=H && next_w>=0 && next_w<=W && map[next_h][next_w] == 1 && !visited[next_h][next_w]){
-                    count++;
+                if(next_h>=0 && next_h<=H && next_w>=0 && next_w<=W &&
+                        map[next_h][next_w] == 1){
+                    map[next_h][next_w] = 0;
                     queue.offer(new Point(next_h, next_w));
+                    distance[next_h][next_w] = distance[h][w] + 1;
                 }
             }
         }
