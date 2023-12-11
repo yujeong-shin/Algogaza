@@ -45,6 +45,14 @@ public class Q2644 {
                 result++;
                 dfs(i);
             }
+            // 반례
+            // 4
+            // 1 4
+            // 3
+            // 1 2
+            // 2 3
+            // 2 4
+            // 2에서 3으로 탐색 후 아래 else if조건이 충족하여 result가 0이됨 ㄹㅇ;
             else if(i == M && !visited[B]){
                 result = 0;
                 break;
