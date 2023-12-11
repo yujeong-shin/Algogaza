@@ -1,37 +1,34 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Queue;
-import java.util.StringTokenizer;
+import java.util.*;
 
 public class ex7562 {
     static int[] dx = {-1, -2, -2, -1, 1, 2, 2, 1};
     static int[] dy = {-2, -1, 1, 2, 2, 1, -1, -1};
     static int mapSize;
     static int[][] ch;
+    static List<Integer> result = new ArrayList<>();
     public static void main(String[] args) throws IOException {
         BufferedReader bf = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer st;
         st = new StringTokenizer(bf.readLine());
         int t = Integer.parseInt(st.nextToken());
         for (int i = 0; i < t; i++) {
-            for (int j = 0; j < 3; j++) {
-                st = new StringTokenizer(bf.readLine()); //체스판 한 변의 길이 입력
-                mapSize = Integer.parseInt(st.nextToken());
+            st = new StringTokenizer(bf.readLine()); //체스판 한 변의 길이 입력
+            mapSize = Integer.parseInt(st.nextToken());
 
-                st = new StringTokenizer(bf.readLine()); //나이트가 현재 있는 칸
-                int start_x = Integer.parseInt(st.nextToken());
-                int start_y = Integer.parseInt(st.nextToken());
+            st = new StringTokenizer(bf.readLine()); //나이트가 현재 있는 칸
+            int start_x = Integer.parseInt(st.nextToken());
+            int start_y = Integer.parseInt(st.nextToken());
 
-                st = new StringTokenizer(bf.readLine()); //나이트가 이동하려는 칸
-                int end_x = Integer.parseInt(st.nextToken());
-                int end_y = Integer.parseInt(st.nextToken());
+            st = new StringTokenizer(bf.readLine()); //나이트가 이동하려는 칸
+            int end_x = Integer.parseInt(st.nextToken());
+            int end_y = Integer.parseInt(st.nextToken());
 
-                BFS(start_x, start_y, end_x, end_y);
-            }
+            BFS(start_x, start_y, end_x, end_y);
         }
+        for(int x : result) System.out.println(x);
     }
     public static void BFS(int s_x, int s_y, int e_x, int e_y){
         ch = new int[mapSize][mapSize];
@@ -44,7 +41,7 @@ public class ex7562 {
             for(int i=0; i<len; i++) {
                 Point cur = Q.poll();
                 if(cur.x == e_x && cur.y == e_y) {
-                    System.out.println(level);
+                    result.add(level);
                     return;
                 }
                 for (int j = 0; j < 8; j++) {

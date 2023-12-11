@@ -32,7 +32,6 @@ public class Q11724 {
     private static void dfs(int v) {
         visited[v] = true;
 
-        // 여기 조건을 좀 바꿔야할거 같은데 흐음,,,아닌가?아닌건가? 아닌게맞나? 아닌거같기도하고? 아닌게 맞네
         if(v == treeArray.length) return;
 
         for(int j = 1; j < treeArray.length; j++) {
