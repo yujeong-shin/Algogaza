@@ -1,4 +1,4 @@
-package HiJaeYoung.Graph.week2;
+package HiJaeYoung.Dijkstra;
 
 import java.io.BufferedReader;
 import java.io.IOException;
