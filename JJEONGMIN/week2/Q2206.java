@@ -1,18 +1,24 @@
-import java.awt.*;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.util.*;
-
 public class Q2206 {
+    static int H,W;
     static int[][] map;
-    static int[][][] count;
+    static boolean[][][] visited;
     static ArrayList<Integer> result;
-    static boolean[][] visited;
-    static boolean[] is_crash;
-    static int H,W, walls = 0;
-    static int[] dx = {-1,0,0,1};
-    static int[] dy = {0,1,-1,0};
+
+    static class Node {
+        int h;
+        int w;
+        int cnt;
+        boolean destroyed;
+        public Node(int h, int w, int cnt, boolean destroyed){
+            this.h = h;
+            this.w = w;
+            this.cnt = cnt;
+            this.destroyed = destroyed;
+        }
+    }
+
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer st = new StringTokenizer(br.readLine());
@@ -22,54 +28,55 @@ public class Q2206 {
         W = Integer.parseInt(st.nextToken());
 
         map = new int[H][W];
+        visited = new boolean[2][H][W];
+
         for(int i=0; i<H; i++){
             String str = br.readLine();
             for(int j=0; j<W; j++) {
                 map[i][j] = str.charAt(j) - '0';
-                if(map[i][j] == 1) walls++;
             }
         }
-        count = new int[walls][H][W];
-        visited = new boolean[H][W];
-        is_crash = new boolean[walls];
 
         bfs(0,0);
-        Collections.sort(result);
-        System.out.println(result.getFirst());
-
+        br.close();
     }
     private static void bfs(int start_H, int start_W){
+        int[] dx = {-1,0,0,1};
+        int[] dy = {0,1,-1,0};
+
         Queue queue = new LinkedList<Integer>();
-        queue.offer(new Point(start_H, start_W));
+        queue.offer(new Node(start_H, start_W, 1, false));
 
         while(!queue.isEmpty()){
-            Point p = (Point) queue.poll();
-            if(p.x == H-1 && p.y == W-1) break;
+            Node now = (Node) queue.poll();
+            if(now.h == H-1 && now.w == W-1){
+                System.out.println(now.cnt);
+                return;
+            }
+            for(int i=0; i<4; i++){
+                int next_h = now.h + dy[i];
+                int next_w = now.w + dx[i];
+                if(next_h<0 || next_h>=H || next_w<0 || next_w>=W) continue;
 
-            for(int i=0; i<walls; i++){
-                count[i][0][0] = 1;
-                for(int j=0; j<4; j++) {
-                    int next_H = p.x + dy[j];
-                    int next_W = p.y + dx[j];
+                int next_cnt = now.cnt + 1;
 
-                    if (next_W >= 0 && next_W < W && next_H >= 0 && next_H < H){
-                        if(map[next_H][next_W] == 1 && is_crash[i]) continue;
-                        else if(map[next_H][next_W] == 1 && !is_crash[i] && !visited[next_H][next_W]){
-                            is_crash[i] = true;
-                            visited[next_H][next_W] = true;
-                            queue.offer(new Point(next_H, next_W));
-                            count[i][next_H][next_W] = count[i][p.x][p.y] + 1;
-                            break;
-                        }
-                        else if(map[next_H][next_W] == 0){
-                            queue.offer(new Point(next_H,next_W));
-                            count[i][next_H][next_W] = count[i][p.x][p.y] + 1;
-                            break;
-                        }
+                if(map[next_h][next_w] == 0){
+                    if(!now.destroyed && !visited[0][next_h][next_w]){
+                        queue.add(new Node(next_h,next_w,next_cnt,false));
+                        visited[0][next_h][next_w] = true;
+                    } else if(now.destroyed && !visited[1][next_h][next_w]){
+                        queue.add(new Node(next_h,next_w,next_cnt,true));
+                        visited[1][next_h][next_w] = true;
                     }
                 }
-                result.add(count[i][H-1][W-1]);
+                if(map[next_h][next_w] == 1){
+                    if(!now.destroyed){
+                        queue.add(new Node(next_h,next_w,next_cnt,true));
+                        visited[1][next_h][next_w] = true;
+                    }
+                }
             }
         }
+        System.out.println(-1);
     }
 }
