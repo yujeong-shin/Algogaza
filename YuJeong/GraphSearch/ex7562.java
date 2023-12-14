@@ -2,10 +2,11 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.*;
+import java.awt.Point;
 
 public class ex7562 {
     static int[] dx = {-1, -2, -2, -1, 1, 2, 2, 1};
-    static int[] dy = {-2, -1, 1, 2, 2, 1, -1, -1};
+    static int[] dy = {-2, -1, 1, 2, 2, 1, -1, -2};
     static int mapSize;
     static int[][] ch;
     static List<Integer> result = new ArrayList<>();
