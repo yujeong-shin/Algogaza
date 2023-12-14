@@ -93,7 +93,6 @@ public class Q1260 {
         // Queue.offer -> 값을 추가하는데 Queue에 데이터가 가득 찼을 시 false 반환
         queue.offer(v);
         visited[v] = true;
-
         System.out.print(v + " ");
 
         while(!queue.isEmpty()) {

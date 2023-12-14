@@ -1,4 +1,4 @@
-package HiJaeYoung.Graph;
+package HiJaeYoung.Graph.week1;
 
 import java.io.BufferedReader;
 import java.io.IOException;
