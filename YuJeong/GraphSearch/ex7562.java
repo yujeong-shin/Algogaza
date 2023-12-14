@@ -5,7 +5,7 @@ import java.util.*;
 
 public class ex7562 {
     static int[] dx = {-1, -2, -2, -1, 1, 2, 2, 1};
-    static int[] dy = {-2, -1, 1, 2, 2, 1, -1, -1};
+    static int[] dy = {-2, -1, 1, 2, 2, 1, -1, -2};
     static int mapSize;
     static int[][] ch;
     static List<Integer> result = new ArrayList<>();
@@ -35,6 +35,7 @@ public class ex7562 {
         ch[s_x][s_y]=1;
         Queue<Point> Q = new LinkedList<>();
         Q.add(new Point(s_x, s_y));
+        //뻗어나간 Depth 깊이로 최단경로 찾기 = 정답
         int level=0;
         while(!Q.isEmpty()) {
             int len = Q.size();
