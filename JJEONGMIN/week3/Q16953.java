@@ -8,26 +8,26 @@ public class Q16953 {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer st = new StringTokenizer(br.readLine());
 
-        int A = Integer.parseInt(st.nextToken());
+        long A = Integer.parseInt(st.nextToken());
         int B = Integer.parseInt(st.nextToken());
 
         int answer = bfs(A,B);
         System.out.println(answer);
     }
-    private static int bfs(int A, int B){
-        Queue<Integer> queue = new LinkedList<>();
+    private static int bfs(long A, int B){
+        Queue<Long> queue = new LinkedList<>();
         queue.offer(A);
         int count = 1;
 
         while(!queue.isEmpty()){
             int size = queue.size();
             for(int i=0; i<size; i++){
-                int num = queue.poll();
+                long num = queue.poll();
                 if(num == B) return count;
                 else if(num > B) continue;
                 else{
-                    int a = num*2;
-                    int b = (num*10)+1;
+                    long a = num*2;
+                    long b = (num*10)+1;
                     queue.offer(a);
                     queue.offer(b);
                 }
