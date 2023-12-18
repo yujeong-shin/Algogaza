@@ -7,7 +7,7 @@ import java.util.StringTokenizer;
 
 public class B_15650 {
 
-	public static void main(String[] args) throws Exception {
+	public static void main(String[] args) throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
 		StringTokenizer st = new StringTokenizer(br.readLine());
@@ -20,7 +20,7 @@ public class B_15650 {
 	}
 
 	private static void dfs(int n, int m, int start, Stack<Integer> stack) {
-		if (stack.size() == m) {
+		if (stack.size() == m) { 
 			for (int num : stack) {
 				System.out.print(num + " ");
 			}

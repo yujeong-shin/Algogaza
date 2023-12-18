@@ -12,7 +12,7 @@ public class B_2178 {
 	static int[][] graph;
 	static int num = 1;
 
-	public static void main(String[] args) throws Exception {
+	public static void main(String[] args) throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
 		StringTokenizer st = new StringTokenizer(br.readLine(), " ");
@@ -54,7 +54,7 @@ public class B_2178 {
 				int newY = y + dy[i];
 
 				if (newX >= 0 && newX < n && newY >= 0 && newY < m && graph[newX][newY] == 1) {
-					queue.add(new int[] { newX, newY, moves + 1 });
+					queue.add(new int[] { newX, newY, moves + 1 }); // 방문하지 않은 위치면 추가
 					graph[newX][newY] = 0;
 				}
 			}
