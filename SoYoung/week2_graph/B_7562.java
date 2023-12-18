@@ -57,12 +57,12 @@ public class B_7562 {
 			if (x == endX && y == endY) {
 				return moves;
 			}
-			for (int i = 0; i < 8; i++) {
+			for (int i = 0; i < 8; i++) { // 이동 가능한 위치
 				int newX = x + dx[i];
 				int newY = y + dy[i];
 
 				if (newX >= 0 && newX < l && newY >= 0 && newY < l && graph[newX][newY] == 0) {
-					queue.add(new int[] { newX, newY, moves + 1 });
+					queue.add(new int[] { newX, newY, moves + 1 }); // 방문하지 않았으면 새 위치 추가
 					graph[newX][newY] = 1;
 				}
 			}
