@@ -14,13 +14,14 @@ public class Q3085 {
             this.type = type;
         }
     }
+    static int N;
     static char[][] map;
     static boolean[][] visited;
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer st = new StringTokenizer(br.readLine());
 
-        int N = Integer.parseInt(st.nextToken());
+        N = Integer.parseInt(st.nextToken());
         visited = new boolean[N][N];
         map = new char[N][N];
 
@@ -37,7 +38,20 @@ public class Q3085 {
     private static void bfs(int h, int w){
         int[] dh = {0,1,0,-1};
         int[] dw = {-1,0,0,1};
-        Queue<Integer> queue = new LinkedList<>();
-//        queue.offer(new Candy(h,w));
+        Queue<Candy> queue = new LinkedList<>();
+        queue.offer(new Candy(h,w, map[h][w]));
+
+        while(!queue.isEmpty()){
+            Candy candy = (Candy) queue.poll();
+            for(int i=0; i<4; i++){
+                int next_h = candy.h + dh[i];
+                int next_w = candy.w + dw[i];
+
+                if(next_h>=0 && next_h<N && next_w>=0 && next_w<N &&map[next_h][next_w] == candy.type && !visited[next_h][next_w]){
+                    visited[next_h][next_w] = true;
+                }
+            }
+        }
+
     }
 }
