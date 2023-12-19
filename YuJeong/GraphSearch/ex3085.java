@@ -27,7 +27,6 @@ public class ex3085 {
             }
         }
         System.out.println(answer);
-
     }
 
     static void checkSameColor(int x, int y){
@@ -37,18 +36,15 @@ public class ex3085 {
             int ny = y + dy[i];
             if(nx>=0 && nx<N && ny>=0 && ny<N){
                 //인접한 사탕이 다르다면
-                if(board[nx][ny] != board[x][y]){
-                    //swap
-                    char tmp = board[x][y];
-                    board[x][y] = board[nx][ny];
-                    board[nx][ny] = tmp;
-                    //같은색 가장 긴 연속부분 찾아서 answer에 저장
-                    answer = Math.max(answer, longLengthCount());
-                    //swap(원래대로 되돌리기)
-                    char tmp2 = board[x][y];
-                    board[x][y] = board[nx][ny];
-                    board[nx][ny] = tmp2;
-                }
+                char tmp = board[x][y];
+                board[x][y] = board[nx][ny];
+                board[nx][ny] = tmp;
+                //같은색 가장 긴 연속부분 찾아서 answer에 저장
+                answer = Math.max(answer, longLengthCount());
+                //swap(원래대로 되돌리기)
+                char tmp2 = board[x][y];
+                board[x][y] = board[nx][ny];
+                board[nx][ny] = tmp2;
             }
         }
     }
@@ -78,7 +74,7 @@ public class ex3085 {
 //        각 열을 돌면서 색상별로 연속부분 세기
         for (int i = 0; i < N; i++) {
             int cntC=1, cntP=1, cntZ=1, cntY=1;
-            for (int j = 0; j < N - 1; j++) {
+            for (int j = 0; j < N-1; j++) {
                 if(board[j][i]==board[j+1][i]) {
                     if(board[j][i]=='C') cntC+=1;
                     if(board[j][i]=='P') cntP+=1;
@@ -105,5 +101,4 @@ public class ex3085 {
 //        longestLength = Math.max(longestLength, maxY);
 //        return longestLength;
     }
-
 }
