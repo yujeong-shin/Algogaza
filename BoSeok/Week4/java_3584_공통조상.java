@@ -7,16 +7,16 @@ import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+
 public class java_3584_공통조상 {
     static int t;
     static int n;
     static StringTokenizer stk;
     static int[] parents;
-    static boolean[] visited;
     static ArrayList<Integer> parentsList;  // 왼쪽 부모들
 
-//    static ArrayList<Integer> lefts;  // 왼쪽 부모들
-//    static ArrayList<Integer> rights; // 오른쪽 부모들
+    static ArrayList<Integer> lefts;  // 왼쪽 부모들
+    static ArrayList<Integer> rights; // 오른쪽 부모들
 
     public static void main(String[] args) throws IOException {
         BufferedReader bf = new BufferedReader(new InputStreamReader(System.in));
@@ -29,8 +29,8 @@ public class java_3584_공통조상 {
 //            List<Integer> parents = IntStream.rangeClosed(0, n)
 //                    .boxed()
 //                    .collect(Collectors.toList());
+
             parents = new int[n + 1];
-            visited = new boolean[n + 1];
             for (int j = 0; j < n - 1; j++) {
                 stk = new StringTokenizer(bf.readLine());
 
@@ -43,46 +43,47 @@ public class java_3584_공통조상 {
             int left = Integer.parseInt(stk.nextToken());
             int right = Integer.parseInt(stk.nextToken());
 
-            calculate(left, right);
+            lefts = find_parent(parents, left); //left 부모리스트
+            rights = find_parent(parents, right); // right 부모리스
 
-/*//            Optional<Integer> : null을 다루는 방법, 값이 존재할수도 안 할 수도 있음
+//            깊이가 다르므로 깊이 맞춰주는 작업.
+            if (lefts.size() > rights.size()) {
+                int diff = lefts.size()-rights.size();
+                for (int j = 0; j < diff; j++) {
+                    lefts.remove(0);
+                }
+            } else if (lefts.size() < rights.size()) {
+                int diff = rights.size() - lefts.size();
+                for (int j = 0; j < diff; j++) {
+                    rights.remove(0);
+                }
+            }
+
+//            Optional<Integer> : null을 다루는 방법, 값이 존재할수도 안 할 수도 있음
             Integer res = IntStream.range(0, rights.size())
                     .filter(idx -> lefts.get(idx) == rights.get(idx)) // 인덱스가 같을때 밸류도 같은 값을 찾아주고.
-                    .mapToObj(lefts::get) // 찾았을때 해당 인덱스의 값을 가져오고
+//                    .mapToObj(lefts::get) // 찾았을때 해당 인덱스의 값을 가져오고
+//                    .findFirst().orElse(0);
                     .findFirst().orElse(0);
-            System.out.println(res);*/
+            System.out.println(lefts.get(res));
         }
     }
 
-    private static void calculate(int left, int right) {
-        while (left > 0) {
-            visited[left] = true;
-            left = parents[left];
-        }
-        while (right > 0) {
-            if (visited[right]) {
-                System.out.println(right);
-                break;
-            }
-            right = parents[right];
-        }
-    }
-}
-
-    /*
-    private static ArrayList<Integer> find_parent(List<Integer> parents, int node) {
+    private static ArrayList<Integer> find_parent(int[] parents, int node) {
         parentsList = new ArrayList<>();
         parentsList.add(node);
 //        부모가 없음, 자기자신이 부모일떄까지 찾아준다.
-        while (parents.get(node) != node) {
+        while (parents[node] != 0) {
 //           부모의 부모를 더해주고.
-            parentsList.add(parents.get(node));
+            parentsList.add(parents[node]);
 //            부모를 부모의 부모로 바꿔줌 -> 부모의 부모를 또 찾아야 하므로.
-            node = parents.get(node);
+            node = parents[node];
         }
         return parentsList;
     }
 }
+
+
 /*
     Optional res = IntStream.range(0, rights.size())
 
