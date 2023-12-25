@@ -30,9 +30,6 @@ public class ex16928 {
         System.out.println(answer);
     }
 
-    // 게임의 목표는 1번 칸에서 시작해서 100번 칸에 도착하는 것이다.
-    // 사다리 : 칸 증가, 뱀 : 칸 감소
-    // 100까지 도착하기 위해 굴려야 하는 주사위의 횟수는?
     static void BFS(int num){
         Queue<Integer> Q = new LinkedList<>();
         boolean[] visited = new boolean[101];
@@ -52,8 +49,11 @@ public class ex16928 {
                     int next = now + diceNum;
                     if(!visited[next] && next<=100) {
                         visited[next]=true;
-                        if(map.containsKey(next)) Q.add(map.get(next));
-                        Q.add(next);
+                        if(map.containsKey(next)) {
+                            Q.add(map.get(next));
+                        } else{
+                            Q.add(next);
+                        }
                     }
                 }
             }

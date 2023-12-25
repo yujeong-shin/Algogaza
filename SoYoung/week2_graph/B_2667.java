@@ -10,7 +10,7 @@ public class B_2667 {
 	static int[][] graph;
 	static List<Integer> list = new ArrayList<>();
 
-	public static void main(String[] args) throws IOException {
+	public static void main(String[] args) throws Exception {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		int n = Integer.parseInt(br.readLine());
 		graph = new int[n][n];
