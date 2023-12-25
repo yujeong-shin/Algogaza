@@ -1,14 +1,13 @@
-package BoSeok.Week1_Graph;
+package BoSeok.Week4;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.StringTokenizer;
 
-public class java_11033 {
+public class java_11033_최솟값찾기 {
     static int n,l;
     static LinkedList<Node> result = new LinkedList<Node>();
     static ArrayList<Integer> arr = new ArrayList<>();
