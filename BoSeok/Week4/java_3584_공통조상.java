@@ -25,11 +25,7 @@ public class java_3584_공통조상 {
             n = Integer.parseInt(bf.readLine());
 
 
-            // 부모 초기값은 자기자신이 부모이다.
-//            List<Integer> parents = IntStream.rangeClosed(0, n)
-//                    .boxed()
-//                    .collect(Collectors.toList());
-
+            // 부모의 초기값은 0
             parents = new int[n + 1];
             for (int j = 0; j < n - 1; j++) {
                 stk = new StringTokenizer(bf.readLine());
@@ -45,6 +41,9 @@ public class java_3584_공통조상 {
 
             lefts = find_parent(parents, left); //left 부모리스트
             rights = find_parent(parents, right); // right 부모리스
+
+//            calculate(left, right); 풀이 2.
+
 
 //            깊이가 다르므로 깊이 맞춰주는 작업.
             if (lefts.size() > rights.size()) {
@@ -83,7 +82,6 @@ public class java_3584_공통조상 {
     }
 }
 
-
 /*
     Optional res = IntStream.range(0, rights.size())
 
@@ -101,3 +99,19 @@ public class java_3584_공통조상 {
 
             */
 
+/*
+//    풀이2.
+    private static void calculate(int left, int right) {
+        while (left > 0) {
+            visited[left] = true;
+            left = parents[left];
+        }
+        while (right > 0) {
+            if (visited[right]) {
+                System.out.println(right);
+                break;
+            }
+            right = parents[right];
+        }
+    }
+*/
