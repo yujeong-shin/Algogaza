@@ -14,21 +14,22 @@ public class Num2839_suger {
         vist[3] = 1;
         vist[5] =1;
         vist[n]=dp(n);
-        if(vist[n] >=5000){
+        if(vist[n] >=2000){
             System.out.println(-1);
         }else{
             System.out.println(vist[n]);
         }
+        //System.out.println(Arrays.toString(vist));
     }
     public static int dp(int n) {
-        int answer =0;
-        while(n!=0){
-            if(n%5==0){
-                return answer +=n/5;
-            }
-            n -=3;
-            answer++;
+        if(n<3){
+            return 2000;
         }
-        return answer;
+        if(n==3) return 1;
+        if(n<5) return 2000;
+        if(n==5) return 1;
+        if(vist[n]!=0) return vist[n];
+        vist[n] = Math.min(dp(n-5)+1,dp(n-3)+1);
+        return vist[n];
     }
 }
