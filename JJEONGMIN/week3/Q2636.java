@@ -11,6 +11,7 @@ public class Q2636 {
     static int H,W, cheese = 0, time = 1;
     static int[][] map;
     static boolean[][] visited;
+
     static int[] dh = {-1,0,0,1};
     static int[] dw = {0,1,-1,0};
     public static void main(String[] args) throws IOException {
