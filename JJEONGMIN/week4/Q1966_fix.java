@@ -1,7 +1,9 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.Collections;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.StringTokenizer;
 
 public class Q1966_fix {
@@ -32,27 +34,27 @@ public class Q1966_fix {
         System.out.println(sb.toString());
     }
     private static void checkOrder(int N, int M) {
-        int max = 0;
-        int max_index = 0;  // M의 값보다 1높은 값의 인덱스
-        for(int i=0; i<deque.size(); i++){
-            if(max < deque.get(i)) max = deque.get(i);
-            if(deque.get(M) > deque.get(i)){
-                max_index = i;
-            }
-        }
-        if(max == deque.get(M)) {
-            sb.append("1").append("\n");
-            return;
-        }
-        else if(M < max_index){
+        int second_index = getIndex(M);
+
+        if(M < second_index){
             for(int i=0; i<M; i++) if(deque.get(i) >= deque.get(M)) answer++;
-            for(int i=M; i<max_index; i++) if(deque.get(i) > deque.get(M)) answer++;
-            for(int i=max_index; i<deque.size(); i++) if(deque.get(i) >= deque.get(M)) answer++;
+            for(int i=M; i<second_index; i++) if(deque.get(i) > deque.get(M)) answer++;
+            for(int i=second_index; i<deque.size(); i++) if(deque.get(i) >= deque.get(M)) answer++;
         }
         else{
             for(int i=0; i<M; i++) if(deque.get(i) >= deque.get(M)) answer++;
             for(int i=M; i<deque.size(); i++) if(deque.get(i) > deque.get(M)) answer++;
         }
         sb.append(answer).append("\n");
+    }
+    private static int getIndex(int M){
+        int num = 0, index = 0;
+        for(int i=0; i<deque.size(); i++){
+            if(deque.get(M) < deque.get(i) && deque.get(i) < num){
+                num = deque.get(i);
+                index = i;
+            } else if(deque.get(i) == num) index = i;
+        }
+        return index;
     }
 }
