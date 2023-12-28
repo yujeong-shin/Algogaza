@@ -1,11 +1,14 @@
 package BoSeok.Week5;
 
 import java.io.BufferedReader;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Map;
 
 public class java_1063_킹 {
+
+    static String filePath = "/Users/song/Desktop/Github/Algogaza/input";
     static int[] move(String s) {
         int x = 0;
         int y = 0;
@@ -47,7 +50,9 @@ public class java_1063_킹 {
     );
 
     public static void main(String[] args) throws IOException {
-        BufferedReader bf = new BufferedReader(new InputStreamReader(System.in));
+        FileReader fileReader = new FileReader(filePath);
+        BufferedReader bf = new BufferedReader(new BufferedReader(fileReader));
+        
         String[] s = bf.readLine().split(" ");
         int n = Integer.parseInt(s[2]);
 //        king ,stone 해쉬로 값 가져오기
