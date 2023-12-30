@@ -18,7 +18,6 @@ public class ex1138_한줄로서기 {
         }
 
         for (int i = 1; i <= n; i++) {
-//            System.out.println("countLeft[i] = " + countLeft[i] + "  i = " + i);
             lineUp(line, countLeft[i], i);
         }
 
@@ -27,40 +26,16 @@ public class ex1138_한줄로서기 {
         }
     }
 
-    static void lineUp(int[] line, int startIndex, int value) {
-        int index = -1;
+    static void lineUp(int[] line, int countZero, int value) {
+//        countZero 개수만큼 0을 찾아 건너뛰고, 다음 자리에 value를 넣음
+//        countZero=2라면, 0을 두 개 찾고 다음 0의 위치에 value를 넣어야 함.
+        int count = 0;
         for (int i = 1; i < line.length; i++) {
-            if (line[i] == 0) {
-                if (startIndex == 0) {
-                    index = i;
-                    break;
-                }
-                startIndex--;
+            if(line[i]==0) count++; //0 만나면 세어주고
+            if(count == countZero+1) { //현재 세고있는 count가 들어가야 할 위치에 도달하면
+                line[i]=value; //줄 세워주기
+                break;
             }
         }
-        line[index] = value;
     }
 }
-
-/*
-BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        StringTokenizer st;
-        int N = Integer.parseInt(br.readLine());
-        int[] arr = new int[N+1];
-        List<Integer> result = new LinkedList<>();
-
-        st = new StringTokenizer(br.readLine());
-        for(int i=1; i<=N; i++){
-            arr[i] = Integer.parseInt(st.nextToken());
-        }
-
-        for(int i=N; i>=1; i--){
-            result.add(arr[i], i);
-        }
-
-        StringBuilder sb = new StringBuilder();
-        for(int su : result){
-            sb.append(su).append(" ");
-        }
-        System.out.println(sb);
- */
