@@ -68,8 +68,8 @@ public class ex16234_인구이동 {
             y = country.y;
 
             for (int i = 0; i < 4; i++) {
-                int nx = country.x + dx[i];
-                int ny = country.y + dy[i];
+                int nx = x + dx[i];
+                int ny = y + dy[i];
                 //다음 도시가 방문된 적 없고, NxN 범위 안에 있다면
                 if(nx>=0 && nx<n && ny>=0 && ny<n){
                     //현재 도시와 다음 도시와 연결될 수 있다면
