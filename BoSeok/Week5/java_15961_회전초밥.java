@@ -7,7 +7,7 @@ import java.util.Hashtable;
 import java.util.StringTokenizer;
 
 
-public class Main {
+public class java_15961_회전초밥 {
     static int n,m,k,c;
     static int[] lst;
     static int left, right;
