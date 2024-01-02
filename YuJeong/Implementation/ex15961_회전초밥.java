@@ -5,7 +5,7 @@ import java.util.*;
 
 public class ex15961_회전초밥 {
     static int n, d, k, c;
-    static int answer = Integer.MIN_VALUE;
+
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer st;
@@ -20,27 +20,45 @@ public class ex15961_회전초밥 {
             sushi[i] = Integer.parseInt(br.readLine());
         }
 
-        List<Integer> sushi_list = new ArrayList<>();
-        //맨 처음에 0부터 k개 값으로 answer 구하기
+        int[] ch = new int[d + 1];
+
+        // 초기 창 구성
+        int count = 0;
         for (int i = 0; i < k; i++) {
-            sushi_list.add(sushi[i]);
+            if (ch[sushi[i]] == 0) {
+                count++;
+            }
+            ch[sushi[i]]++;
         }
-        answer = Math.max(answer, maxDiversity(sushi_list));
+        int answer = count;
 
-         for (int i = k; i < n + k - 1; i++) {
-             sushi_list.add(sushi[i%n]);
-             sushi_list.remove(0);
+        // 슬라이딩 윈도우
+        for (int i = k; i < n + k - 1; i++) {
+            int rt = i % n;
+            int lt = (i - k) % n;
 
-            answer = Math.max(answer, maxDiversity(sushi_list));
+            // rt 값 추가
+            // 현재 0개일 때 추가할 때만 정답 값에 의미를 가짐
+            if (ch[sushi[rt]] == 0) {
+                count++;
+            }
+            ch[sushi[rt]]++;
+
+            // lt 값 삭제
+            // 현재 1개일 때 삭제할 때만 정답 값에 의미를 가짐
+            if (ch[sushi[lt]] == 1) {
+                count--;
+            }
+            ch[sushi[lt]]--;
+
+            // 현재 구간에 쿠폰 초밥이 포함되어 있지 않으면 추가로 하나 더 세기
+            if (ch[c] == 0) {
+                answer = Math.max(answer, count + 1);
+            } else {
+                answer = Math.max(answer, count);
+            }
         }
 
         System.out.println(answer);
-    }
-    static int maxDiversity(List<Integer> sushi_list){
-        Set<Integer> s = new HashSet<>();
-        s.addAll(sushi_list);
-
-        if(s.contains(c)) return s.size(); //쿠폰 초밥 먹은 경우
-        else return s.size()+1;//쿠폰 초밥 먹지 않은 경우
     }
 }
