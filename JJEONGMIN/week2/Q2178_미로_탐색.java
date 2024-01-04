@@ -50,8 +50,7 @@ public class Q2178_미로_탐색 {
                 int next_h = h+dy[i];
                 int next_w = w+dx[i];
 
-                if(next_h>=0 && next_h<=H && next_w>=0 && next_w<=W &&
-                        map[next_h][next_w] == 1){
+                if(next_h>=0 && next_h<=H && next_w>=0 && next_w<=W && map[next_h][next_w] == 1) {
                     map[next_h][next_w] = 0;
                     queue.offer(new Point(next_h, next_w));
                     distance[next_h][next_w] = distance[h][w] + 1;
