@@ -41,14 +41,14 @@ public class Q2933_미네랄 {
     private static void crashMineral(int height) {
         if(left){
             for(int i=0; i<map[height].length; i++){
-                if(map[height][i] == '*') {
+                if(map[height][i] == 'x') {
                     map[height][i] = '.';
                     break;
                 }
             }
         } else {
             for (int i = map[height].length - 1; i >= 0; i--) {
-                if (map[height][i] == '*') {
+                if (map[height][i] == 'x') {
                     map[height][i] = '.';
                     checkCluster(height, i);
                     break;
@@ -67,10 +67,10 @@ public class Q2933_미네랄 {
         while(!queue.isEmpty()){
             Point point = queue.poll();
             if(point.y-1 >=0 && point.y+1 < W){
-                if(map[point.x][point.y-1] == '*'){
+                if(map[point.x][point.y-1] == 'x'){
                     bfs(new Point(point.x, point.y-1));
                 }
-                if(map[point.x][point.y+1] == '*'){
+                if(map[point.x][point.y+1] == 'x'){
                     bfs(new Point(point.x, point.y+1));
                 }
             }
@@ -87,10 +87,11 @@ public class Q2933_미네랄 {
             for(int i=0; i<4; i++){
                 int nextH = point.x + dh[i];
                 int nextW = point.y + dw[i];
-                if(nextH>=0 && nextW>=0 && nextH<H && nextW<W && map[nextH][nextW] == '*'){
+                if(nextH>=0 && nextW>=0 && nextH<H && nextW<W && map[nextH][nextW] == 'x'){
 
                 }
             }
         }
+        return false;
     }
 }
