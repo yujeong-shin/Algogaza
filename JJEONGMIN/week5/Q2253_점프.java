@@ -1,5 +1,3 @@
-package JJEONGMIN.week5;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -25,7 +23,7 @@ public class Q2253_점프 {
     }
     static int jump(int dis){
         count++;
-//        stones[1]
+        stones[1]
         if(smallList[dis] == 2) {
 
         }
