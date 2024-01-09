@@ -24,8 +24,12 @@ public class test {
 //        int[][] triangle = {{7}, {3, 8}, {8, 1, 0}, {2, 7, 4, 4}, {4, 5, 2, 6, 5}};
 //        System.out.println(solution.triangle(triangle));
         // third
-        int n = 6;
-        System.out.println(solution.oneTwoThree(n));
+//        int n = 6;
+//        System.out.println(solution.oneTwoThree(n));
+        // 부분 수열의 합
+        int[] sequence = {2, 2, 2, 2, 2, 2};
+        int k = 6;
+        System.out.println(Arrays.toString(solution.solution(sequence, k)));
     }
     static class Solution {
         static boolean[] visited;
@@ -172,6 +176,87 @@ public class test {
             if(num != 0)
                 answer = num + Integer.toString(num1);
             else answer = Integer.toString(num1);
+            return answer;
+        }
+        public int ongr(String[] babbling) {
+            int answer = 0;
+
+            return answer;
+        }
+        // 이분탐색?
+        public int[] 뻘짓1(int[] sequence, int k) {
+            int[] answer = new int[2];
+            int temp = 0, count = 1;
+            for(int i=sequence.length-1; i>=0; i--){
+                for(int j=0; j<sequence.length; j++){
+                    temp = 0;
+                    for(int x=0; x<count; x++){
+                        if(j+x >= sequence.length) break;
+                        temp += sequence[j+x];
+                        if(temp == k) {
+                            answer[0] = j;
+                            answer[1] = j + x;
+                            return answer;
+                        }
+                        if(count == sequence.length) break;
+                    }
+                }
+                count++;
+            }
+            return answer;
+        }
+        public int[] 뻘짓2(int[] sequence, int k){
+            int[] answer = new int[2];
+            List<Point> list = new ArrayList<>();
+            for(int i=0; i<sequence.length; i++){
+                int temp = 0;
+                for(int j=i; j<sequence.length; j++){
+                    temp += sequence[j];
+                    if(temp == k) list.add(new Point(i,j));
+                    if(temp > k) break;
+                }
+            }
+            int min = Integer.MAX_VALUE;
+            for (Point point : list) {
+                int diff = point.y - point.x;
+                if (min > diff) {
+                    answer[0] = point.x;
+                    answer[1] = point.y;
+                    min = diff;
+                }
+            }
+            return answer;
+        }
+        public int[] solution(int[] sequence, int k) {
+            int[] answer = new int[2];
+            List<Point> list = new ArrayList<>();
+            Point p = new Point(0,0);
+            int sum = sequence[0];
+
+            while (true) {
+                if (sum == k) {
+                    list.add(new Point(p.x, p.y));
+                    sum -= sequence[p.x];
+                    p.x++;
+                } else if (sum > k) {
+                    sum -= sequence[p.x];
+                    p.x++;
+                } else {
+                    p.y++;
+                    if(p.y == sequence.length) break;
+                    sum += sequence[p.y];
+                }
+            }
+
+            int min = Integer.MAX_VALUE;
+            for (Point point : list) {
+                int diff = point.y - point.x;
+                if (min > diff) {
+                    answer[0] = point.x;
+                    answer[1] = point.y;
+                    min = diff;
+                }
+            }
             return answer;
         }
     }
