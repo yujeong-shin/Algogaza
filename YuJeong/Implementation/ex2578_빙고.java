@@ -1,97 +1,81 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.Arrays;
-import java.util.StringTokenizer;
-import java.util.stream.IntStream;
+import java.util.*;
 
-import static java.lang.System.exit;
-
+//class Point{
+//    int x;
+//    int y;
+//    public Point(int x, int y) {
+//        this.x = x;
+//        this.y = y;
+//    }
+//}
 public class ex2578_빙고 {
-    static int[][] bingo;
-    static int count ;
-
     public static void main(String[] args) throws IOException {
-        BufferedReader bf = new BufferedReader(new InputStreamReader(System.in));
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer st;
+        Map<Integer, Point> map = new HashMap<>();
+        int n = 5;
+        int number_count = 0;
+        int total_count = 0;
+        int[] bingoRow = new int[n];
+        int[] bingoColumn = new int[n];
+        int[] bingoX = new int[2];
 
-        bingo = new int[5][5];
-        for (int i = 0; i < 5; i++) {
-            StringTokenizer stk = new StringTokenizer(bf.readLine());
-            for (int j = 0; j < 5; j++) {
-                bingo[i][j] = Integer.parseInt(stk.nextToken());
+        for (int i = 0; i < n; i++) {
+            st = new StringTokenizer(br.readLine());
+            for (int j = 0; j < n; j++) {
+                // map에 "숫자"-"(x좌표,y좌표)" 쌍으로 집어넣음
+                map.put(Integer.parseInt(st.nextToken()), new Point(i, j));
             }
         }
 
-        for (int i = 0; i < 5; i++) {
-            StringTokenizer stk = new StringTokenizer(bf.readLine());
-            for (int j = 0; j < 5; j++) {
-                int target = Integer.parseInt(stk.nextToken());
-                for (int k = 0; k < 5; k++) {
-                    for (int l = 0; l < 5; l++) {
-                        if (bingo[k][l] == target) {
-                            bingo[k][l] = 0;
-                        }
-                    }
+        f1: for (int i = 0; i < n; i++) {
+            st = new StringTokenizer(br.readLine());
+            for (int j = 0; j < n; j++) {
+                int input_number = Integer.parseInt(st.nextToken());
+                number_count++;
+
+                Point point = map.get(input_number);
+                bingoRow[point.x]++; // 가로 빙고 count
+                bingoColumn[point.y]++; // 세로 빙고 count
+
+                if (point.x == point.y) {
+                    bingoX[0]++; // 우하향 대각선에 있는 값들
                 }
-                rCheck();
-                cCheck();
-                lDownCheck();
-                rDownCheck();
-                if (count >= 3) { // 3줄 이상 빙고이면 몇 번째 숫자인지 출력하고 종료
-                    System.out.println(i*5 + j + 1);
-                    exit(0);
+
+                if (point.y == n - 1 - point.x) {
+                    bingoX[1]++; // 좌하향 대각선에 있는 값들
                 }
-                count = 0;
+
+                // 빙고가 완성되었는지 확인
+                if (bingoRow[point.x] == n) {
+                    total_count++;
+                    bingoRow[point.x] = 0; // 이미 확인한 빙고 초기화
+                }
+
+                if (bingoColumn[point.y] == n) {
+                    total_count++;
+                    bingoColumn[point.y] = 0;
+                }
+
+                if (bingoX[0] == n) {
+                    total_count++;
+                    bingoX[0] = 0;
+                }
+
+                if (bingoX[1] == n) {
+                    total_count++;
+                    bingoX[1] = 0;
+                }
+
+                // 3줄 이상 완성되었으면 결과 출력
+                if (total_count >= 3) {
+                    System.out.println(number_count);
+                    break f1;
+                }
             }
         }
-    }
-
-
-    //가로 체크
-    public static void rCheck() {
-        for (int i = 0; i < 5; i++) {
-            int zeroCount = 0;
-            for (int j = 0; j < 5; j++) {
-                if (bingo[i][j] == 0)
-                    zeroCount++;
-            }
-            if (zeroCount == 5)
-                count++;
-        }
-    }
-
-    // 세로 체크
-    public static void cCheck() {
-        for (int i = 0; i < 5; i++) {
-            int zeroCount = 0;
-            for (int j = 0; j < 5; j++) {
-                if (bingo[j][i] == 0)
-                    zeroCount++;
-            }
-            if (zeroCount == 5)
-                count++;
-        }
-    }
-
-    // 우 하향대각선
-    public static void lDownCheck() {
-        int zeroCount = 0;
-        for (int i = 0; i < 5; i++) {
-            if (bingo[i][i] == 0)
-                zeroCount++;
-        }
-        if (zeroCount == 5)
-            count++;
-    }
-
-    // 우상향대각선
-    public static void rDownCheck() {
-        int zeroCount = 0;
-        for (int i = 0; i < 5; i++) {
-            if (bingo[i][4 - i] == 0)
-                zeroCount++;
-        }
-        if (zeroCount == 5)
-            count++;
     }
 }
