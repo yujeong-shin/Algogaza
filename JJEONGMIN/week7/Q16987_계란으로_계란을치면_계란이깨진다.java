@@ -36,28 +36,31 @@ public class Q16987_계란으로_계란을치면_계란이깨진다 {
         visited = new boolean[N];
         for(int i=0; i<eggMayoList.size(); i++){
             visited[i] = true;
-            dfs(i, i+1);
+            dfs(i);
         }
 
         System.out.println(answer);
     }
-    private static void dfs(int current, int next){
+    private static void dfs(int current){
         int boom_count = 0;
         for(eggMayo egg : eggMayoList){
             if(egg.boom) boom_count++;
             answer = Math.max(answer, boom_count);
         }
-        if(next == eggMayoList.size()) return;
-        if(eggMayoList.get(next).boom) return;
+        if(current == eggMayoList.size()) return;
 
         for(int i=0; i<eggMayoList.size(); i++){
+            if(eggMayoList.get(current).boom) break;
             if(i != current && !eggMayoList.get(i).boom && !visited[i]){
                 visited[i] = true;
                 eggMayoList.get(current).durability -= eggMayoList.get(i).weight;
                 eggMayoList.get(i).durability -= eggMayoList.get(current).weight;
-                if(eggMayoList.get(current).durability < 0) eggMayoList.get(current).boom = true;
+                if(eggMayoList.get(current).durability < 0) {
+                    eggMayoList.get(current).boom = true;
+                    break;
+                }
                 if(eggMayoList.get(i).durability < 0) eggMayoList.get(i).boom = true;
-                dfs(current, i);
+                dfs(current+1);
                 visited[i] = false;
                 eggMayoList.get(current).durability += eggMayoList.get(i).weight;
                 eggMayoList.get(i).durability += eggMayoList.get(current).weight;
