@@ -18,7 +18,7 @@ public class Q2293_동전_1 {
 
         price[0] = 1;
         for(int coin : coins){
-            for(int i=0; i<K; i++){
+            for(int i=0; i<=K; i++){
                 if(i-coin < 0)continue;
                 price[i] += price[i - coin];
             }
