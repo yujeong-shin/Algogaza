@@ -5,75 +5,69 @@ import java.util.*;
 
 public class Q14888_연산자_끼워넣기 {
     static int max = Integer.MIN_VALUE, min = Integer.MAX_VALUE;
-    static List<Integer> list = new ArrayList<>();
-    static int[] operators = new int[4];
-    static boolean[][] visited;
+    static List<Integer> numbers = new ArrayList<>();
+    static List<Integer> operators = new ArrayList<>();
+    static boolean[] visited;
+
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer st = new StringTokenizer(br.readLine());
 
         int N = Integer.parseInt(st.nextToken());
         st = new StringTokenizer(br.readLine());
-        for(int i=0; i<N; i++){
-            list.add(Integer.parseInt(st.nextToken()));
+        for (int i = 0; i < N; i++) {
+            numbers.add(Integer.parseInt(st.nextToken()));
         }
 
         st = new StringTokenizer(br.readLine());
-        for(int i=0; i<4; i++){
+        for (int i = 0; i < 4; i++) {
             // 0 : 덧셈, 1 : 뺄셈, 2: 곱셈, 3: 나눗셈
-            operators[i] = Integer.parseInt(st.nextToken());
+            int operator = Integer.parseInt(st.nextToken());
+            for (int j = 0; j < operator; j++) {
+                operators.add(i);
+            }
         }
-        visited = new boolean[4][N];
-        dfs(1, list.get(0));
+        visited = new boolean[N - 1];
+        List<Integer> temp = new ArrayList<>();
+        dfs(0, temp);
         System.out.println(max + "\n" + min);
     }
-    private static void dfs(int current, int value){
-        if(checkOperators()) {
-            max = Math.max(max, value);
-            min = Math.min(min, value);
+
+    private static void dfs(int current, List<Integer> temp) {
+        if (temp.size() == operators.size()) {
+            solution(temp);
             return;
         }
+        for (int i = 0; i < operators.size(); i++) {
+            if (!visited[i]) {
+                visited[i] = true;
+                temp.add(operators.get(i));
+                dfs(i, temp);
+                visited[i] = false;
+                temp.remove(temp.size() - 1);
+            }
+        }
+    }
 
-        int bfValue = value;
-        for(int i=current; i<list.size(); i++){
-            int operator = selectOperator(i);
-            if(operator == 0 && !visited[0][i]){
-                visited[0][i] = true;
-                value += list.get(i);
-            } else if(operator == 1 && !visited[1][i]){
-                visited[1][i] = true;
-                value -= list.get(i);
-            } else if(operator == 2 && !visited[2][i]){
-                visited[2][i] = true;
-                value *= list.get(i);
-            } else if(operator == 3 && !visited[3][i]){
-                visited[3][i] = true;
-                if(value < 0) {
-                    value = (Math.abs(value) % list.get(i)) * -1;
+    private static void solution(List<Integer> temp) {
+        int value = numbers.get(0);
+        for (int i = 0; i < temp.size(); i++) {
+            int operator = temp.get(i);
+            if (operator == 0) {
+                value += numbers.get(i + 1);
+            } else if (operator == 1) {
+                value -= numbers.get(i + 1);
+            } else if (operator == 2) {
+                value *= numbers.get(i + 1);
+            } else if (operator == 3) {
+                if (value < 0) {
+                    value = (Math.abs(value) / numbers.get(i + 1)) * -1;
                 } else {
-                    value = value % list.get(i);
+                    value = value / numbers.get(i + 1);
                 }
             }
-            dfs(i+1, value);
-            operators[operator]++;
-            value = bfValue;
         }
-    }
-
-    private static int selectOperator(int idx){
-        for(int i=0; i<4; i++){
-            if(visited[i][idx]) continue;
-            if(operators[i] > 0) {
-                operators[i]--;
-                return i;
-            }
-        }
-        return 4;
-    }
-    private static boolean checkOperators(){
-        for(int i=0; i<4; i++){
-            if(operators[i] != 0) return false;
-        }
-        return true;
+        max = Math.max(max, value);
+        min = Math.min(min, value);
     }
 }
