@@ -7,25 +7,8 @@ import java.util.List;
 public class test {
     public static void main(String[] args) {
         Solution solution = new Solution();
-        // network
-//        int[][] maps = {{1,0,1,1,1},{1,0,1,0,1},{1,0,1,1,1},{1,1,1,0,1},{0,0,0,0,1}};
-//        int[][] maps2 = {{1,0,1,1,1},{1,0,1,0,1},{1,0,1,1,1},{1,1,1,0,0},{0,0,0,0,1}};
-//        System.out.println(solution.gameMap(maps));
-        // gameMap
-//        int n =6;
-//        int[][] vertex = {{3, 6}, {4, 3}, {3, 2}, {1, 3}, {1, 2}, {2, 4}, {5, 2}};
-        // Immigration
-//        int n =6;
-//        int[] times = {7,10};
-//        System.out.println(solution.Immigration(n, times));
-//        int limit = 100;
-//        int[] people = {70,50,80,50};
-        // triangle
-//        int[][] triangle = {{7}, {3, 8}, {8, 1, 0}, {2, 7, 4, 4}, {4, 5, 2, 6, 5}};
-//        System.out.println(solution.triangle(triangle));
-        // third
-        int n = 6;
-        System.out.println(solution.oneTwoThree(n));
+        int[][] maps = {{1,0,1,1,1},{1,0,1,0,1},{1,0,1,1,1},{1,1,1,0,1},{0,0,0,0,1}};
+        System.out.println(solution.gameMap(maps));
     }
     static class Solution {
         static boolean[] visited;
@@ -172,6 +155,144 @@ public class test {
             if(num != 0)
                 answer = num + Integer.toString(num1);
             else answer = Integer.toString(num1);
+            return answer;
+        }
+        public int ongr(String[] babbling) {
+            int answer = 0;
+
+            return answer;
+        }
+        // 이분탐색?
+        public int[] 뻘짓1(int[] sequence, int k) {
+            int[] answer = new int[2];
+            int temp = 0, count = 1;
+            for(int i=sequence.length-1; i>=0; i--){
+                for(int j=0; j<sequence.length; j++){
+                    temp = 0;
+                    for(int x=0; x<count; x++){
+                        if(j+x >= sequence.length) break;
+                        temp += sequence[j+x];
+                        if(temp == k) {
+                            answer[0] = j;
+                            answer[1] = j + x;
+                            return answer;
+                        }
+                        if(count == sequence.length) break;
+                    }
+                }
+                count++;
+            }
+            return answer;
+        }
+        public int[] 뻘짓2(int[] sequence, int k){
+            int[] answer = new int[2];
+            List<Point> list = new ArrayList<>();
+            for(int i=0; i<sequence.length; i++){
+                int temp = 0;
+                for(int j=i; j<sequence.length; j++){
+                    temp += sequence[j];
+                    if(temp == k) list.add(new Point(i,j));
+                    if(temp > k) break;
+                }
+            }
+            int min = Integer.MAX_VALUE;
+            for (Point point : list) {
+                int diff = point.y - point.x;
+                if (min > diff) {
+                    answer[0] = point.x;
+                    answer[1] = point.y;
+                    min = diff;
+                }
+            }
+            return answer;
+        }
+        public int[] solution(int[] sequence, int k) {
+            int[] answer = new int[2];
+            List<Point> list = new ArrayList<>();
+            Point p = new Point(0,0);
+            int sum = sequence[0];
+
+            while (true) {
+                if (sum == k) {
+                    list.add(new Point(p.x, p.y));
+                    sum -= sequence[p.x];
+                    p.x++;
+                } else if (sum > k) {
+                    sum -= sequence[p.x];
+                    p.x++;
+                } else {
+                    p.y++;
+                    if(p.y == sequence.length) break;
+                    sum += sequence[p.y];
+                }
+            }
+
+            int min = Integer.MAX_VALUE;
+            for (Point point : list) {
+                int diff = point.y - point.x;
+                if (min > diff) {
+                    answer[0] = point.x;
+                    answer[1] = point.y;
+                    min = diff;
+                }
+            }
+            return answer;
+        }
+        public String[] openKakao(String[] record) {
+            List<String> answer = new ArrayList<>();
+            StringTokenizer st;
+            Map<String, String> hashMap = new HashMap<>();
+
+            for (int i=0; i<record.length; i++){
+                st = new StringTokenizer(record[i]);
+                String str = st.nextToken();
+                if(str.equals("Leave")) continue;
+                hashMap.put(st.nextToken(), st.nextToken());
+            }
+
+            for(String str : record){
+                st = new StringTokenizer(str);
+                String status = st.nextToken();
+                String name = hashMap.get(st.nextToken());
+                if(status.equals("Enter")){
+                    answer.add(name+"님이 들어왔습니다.");
+                } else if (status.equals("Leave")) {
+                    answer.add(name+"님이 나갔습니다.");
+                }
+            }
+            return answer.toArray(new String[0]);
+        }
+        public int[] PQ(String[] operations){
+            int[] answer = new int[2];
+            PriorityQueue<Integer> min_pq = new PriorityQueue<>();
+            PriorityQueue<Integer> max_pq = new PriorityQueue<>(Collections.reverseOrder());
+
+            for (String s : operations) {
+                StringTokenizer st = new StringTokenizer(s);
+                char operation = st.nextToken().charAt(0);
+                int num = Integer.parseInt(st.nextToken());
+
+                if (operation == 'I') {
+                    min_pq.offer(num);
+                    max_pq.offer(num);
+                } else {
+                    if (num == 1) {
+                        if(!max_pq.isEmpty()) {
+                            int n = max_pq.poll();
+                            min_pq.remove((Integer) n);
+                        }
+                    } else {
+                        if(!min_pq.isEmpty()) {
+                            int n = min_pq.poll();
+                            max_pq.remove((Integer) n);
+                        }
+                    }
+                }
+            }
+            if(!max_pq.isEmpty() && !min_pq.isEmpty()){
+                answer[0] = max_pq.peek();
+                answer[1] = min_pq.peek();
+            }
             return answer;
         }
     }

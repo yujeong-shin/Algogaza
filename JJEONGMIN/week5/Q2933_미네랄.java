@@ -4,13 +4,15 @@ import java.io.InputStreamReader;
 import java.util.StringTokenizer;
 
 public class Q2933_미네랄 {
+    static int H,W;
     static char[][] map;
     static int[] stick;
+    static boolean left = true;
     public static void main(String[] args) throws IOException {
         BufferedReader br  = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer st = new StringTokenizer(br.readLine());
-        int H = Integer.parseInt(st.nextToken());
-        int W = Integer.parseInt(st.nextToken());
+        H = Integer.parseInt(st.nextToken());
+        W = Integer.parseInt(st.nextToken());
         map = new char[H][W];
         for(int i=0; i<H; i++){
             st = new StringTokenizer(br.readLine());
@@ -27,14 +29,8 @@ public class Q2933_미네랄 {
             stick[i] = Integer.parseInt(st.nextToken());
         }
 
-
-    }
-    private static void crashMineral(int H, boolean 방향) {
-        // 미네랄 뿌셔뿌셔 불고기맛 맛있어
-
-    }
-    private static void checkCluster(){
-        // 클러스터 확인 후 호로록하기
-
+        for(int h : stick){
+            left = !left;
+        }
     }
 }
