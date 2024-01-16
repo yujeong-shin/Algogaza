@@ -7,7 +7,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.*;
 
-public class Main {
+public class B_15649 {
     static List<Integer> list = new ArrayList<>();
     static boolean[] check;
 
