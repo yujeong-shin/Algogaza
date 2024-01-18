@@ -13,9 +13,9 @@ public class ex10974_모든순열 {
         combi = new int[n];
         visited = new boolean[n];
 
-        DFS(0, 0);
+        DFS(0);
     }
-    static void DFS(int L, int start){
+    static void DFS(int L){
         if(L==n){
             for(int num : combi){
                 System.out.print(num+ " ");
@@ -27,7 +27,7 @@ public class ex10974_모든순열 {
                 if(!visited[i]) {
                     visited[i] = true;
                     combi[L] =i+1;
-                    DFS(L+1, i+1);
+                    DFS(L+1);
                     visited[i] = false;
                 }
             }
