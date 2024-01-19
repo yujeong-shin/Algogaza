@@ -40,11 +40,9 @@ public class Q3980_선발_명단 {
                     if(!player[j]){
                         position[i] = true;
                         player[j] = true;
-                        sum += map[i][j];
-                            dfs(i+1, sum);
+                        dfs(i+1, sum+map[i][j]);
                         player[j] = false;
                         position[i] = false;
-                        sum -= map[i][j];
                     }
                 }
             }

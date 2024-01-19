@@ -7,7 +7,6 @@ import java.util.StringTokenizer;
 
 public class Q15652_N과_M_4 {
     static int a=0, b=0;
-    static boolean[] visited;
     static List<Integer> temp = new ArrayList<>();
     static StringBuilder sb = new StringBuilder();
     public static void main(String[] args) throws IOException {
@@ -17,27 +16,22 @@ public class Q15652_N과_M_4 {
         a = Integer.parseInt(st.nextToken());
         b = Integer.parseInt(st.nextToken());
 
-        visited = new boolean[a+1];
-
-        dfs(0);
+        dfs(0, 1);
         System.out.println(sb.toString());
     }
-    private static void dfs(int count){
+    private static void dfs(int count,int num){
         if(count == b){
-            for(int i=0; i<temp.size(); i++){
-                sb.append(temp.get(i)).append(" ");
+            for (Integer integer : temp) {
+                sb.append(integer).append(" ");
             }
             sb.append("\n");
             return;
         }
 
-        for(int i=1; i<=a; i++){
-            if(!visited[i]){
-                temp.add(i);
-                dfs(count+1);
-                if(i==a) visited[temp.get(0)] = true;
-                temp.remove(temp.size()-1);
-            }
+        for(int i=num; i<=a; i++){
+            temp.add(i);
+            dfs(count+1, i);
+            temp.remove(temp.size()-1);
         }
     }
 }

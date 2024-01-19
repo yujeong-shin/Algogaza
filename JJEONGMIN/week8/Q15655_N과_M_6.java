@@ -1,14 +1,10 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.StringTokenizer;
+import java.util.*;
 
 public class Q15655_N과_M_6 {
     static int a=0, b=0;
-    static boolean[] visited;
     static List<Integer> temp = new ArrayList<>();
     static List<Integer> strArr = new ArrayList<>();
     static StringBuilder sb = new StringBuilder();
@@ -25,29 +21,23 @@ public class Q15655_N과_M_6 {
             strArr.add(Integer.parseInt(st.nextToken()));
         }
         Collections.sort(strArr);
-        visited = new boolean[strArr.size()];
 
         dfs(0);
         System.out.println(sb.toString());
     }
-    private static void dfs(int num){
+    private static void dfs(int index){
         if(temp.size() == b) {
-            for(int i=0; i<temp.size(); i++){
-                sb.append(temp.get(i)).append(" ");
+            for (Integer integer : temp) {
+                sb.append(integer).append(" ");
             }
             sb.append("\n");
             return;
         }
 
-        for(int i=num; i<strArr.size(); i++){
-            if(!visited[i]){
-                if(i > temp.get(temp.size()-1)) continue;
-                visited[i] = true;
+        for(int i=index; i<strArr.size(); i++){
                 temp.add(strArr.get(i));
-                dfs(num + 1);
-                visited[i] = false;
+                dfs(i+1);
                 temp.remove(temp.size()-1);
-            }
         }
     }
 }
