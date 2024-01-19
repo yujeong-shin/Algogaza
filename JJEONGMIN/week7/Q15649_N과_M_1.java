@@ -17,9 +17,9 @@ public class Q15649_N과_M_1 {
 
         visited = new boolean[N+1];
 
-        dfs(N, M, 1, 0);
+        dfs(N, M,  0);
     }
-    private static void dfs(int N, int M, int num, int count){
+    private static void dfs(int N, int M, int count){
         if(count == M) {
             for(int i=0; i<M; i++){
                 System.out.print(list.get(i) + " ");
@@ -31,7 +31,7 @@ public class Q15649_N과_M_1 {
             if(!visited[i]){
                 visited[i] = true;
                 list.add(i);
-                dfs(N,M,num+1,count+1);
+                dfs(N,M,count+1);
                 visited[i] = false;
                 list.remove(list.size()-1);
             }
