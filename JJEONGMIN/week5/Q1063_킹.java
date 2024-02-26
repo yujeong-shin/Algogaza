@@ -1,5 +1,6 @@
 import java.io.*;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 import java.util.StringTokenizer;
 
@@ -29,8 +30,8 @@ public class Q1063_킹 {
         for(int i=0; i<loop; i++){
             st = new StringTokenizer(br.readLine());
             move[i] = st.nextToken();
-        }
 
+        }
         for(int i=0; i<loop; i++){
             setMovement(move[i]);
         }
