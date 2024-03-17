@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.StringTokenizer;
 
 public class Q15683_감시 {
@@ -37,31 +36,35 @@ public class Q15683_감시 {
                 map[i][j] = number;
                 if(number != 0 && number != 6 && number != 5){
                     cctvList.add(new CCTV(number, new Point(i, j)));
-                }
+                } else if(number == 5) cctv5List.add(new CCTV(number, new Point(i, j)));
             }
         }
 
-        if(!cctv5List.isEmpty()) {
-            for (CCTV value : cctv5List) {
-                checkDown(map, value.point);
-                checkUp(map, value.point);
-                checkLeft(map, value.point);
-                checkRight(map, value.point);
+        if(!cctv5List.isEmpty()){
+            for (CCTV cctv : cctv5List) {
+                checkLeft(map, cctv.point);
+                checkRight(map, cctv.point);
+                checkUp(map, cctv.point);
+                checkDown(map, cctv.point);
             }
         }
 
         visited = new boolean[cctvList.size()];
         cctvDirection(0);
+        System.out.println(result);
 
     }
     private static void cctvDirection(int num){
         if(directions.size() == cctvList.size()){
-            System.out.println(directions);
-            int[][] tempMap = map.clone();
+            int[][] tempMap = new int[map.length][map[0].length];
+            for(int i=0; i<tempMap.length; i++){
+                tempMap[i] = map[i].clone();
+            }
             for (int i=0; i<cctvList.size(); i++) {
                 CCTV(tempMap, directions.get(i), cctvList.get(i));
             }
             result = Math.min(result, checkSpot(tempMap));
+            return;
         }
 
         for(int i=num; i<cctvList.size(); i++){
@@ -73,14 +76,39 @@ public class Q15683_감시 {
         }
     }
     private static void CCTV(int[][] tempMap, int direction, CCTV cctv){
+        List<String> list = new ArrayList<>();
         if(cctv.number == 1) {
-
+            String[] directionArr = new String[]{"up", "right", "down", "left"};
+            list.add(directionArr[direction-1]);
         } else if (cctv.number == 2) {
-
+            String[][] directionArr = new String[][]{{"up", "down"},{"left", "right"}};
+            if(direction % 2 == 0){
+                list.add(directionArr[0][0]);
+                list.add(directionArr[0][1]);
+            } else {
+                list.add(directionArr[1][0]);
+                list.add(directionArr[1][1]);
+            }
         } else if (cctv.number == 3) {
-
+            String[][] directionArr = new String[][]{{"up", "right"},{"right", "down"},{"down", "left"},{"left", "up"}};
+            list.add(directionArr[direction-1][0]);
+            list.add(directionArr[direction-1][1]);
         } else if (cctv.number == 4) {
-
+            String[][] directionArr = new String[][]{{"up", "right", "down"},{"right", "down", "left"},{"down", "left", "up"},{"left", "up", "right"}};
+            list.add(directionArr[direction-1][0]);
+            list.add(directionArr[direction-1][1]);
+            list.add(directionArr[direction-1][2]);
+        } else if (cctv.number == 5){
+            list.add("up");
+            list.add("right");
+            list.add("down");
+            list.add("left");
+        }
+        for (String s : list) {
+            if (s.equals("up")) checkUp(tempMap, cctv.point);
+            if (s.equals("right")) checkRight(tempMap, cctv.point);
+            if (s.equals("down")) checkDown(tempMap, cctv.point);
+            if (s.equals("left")) checkLeft(tempMap, cctv.point);
         }
     }
     private static int checkSpot(int[][] tempMap){
@@ -93,31 +121,35 @@ public class Q15683_감시 {
         return count;
     }
     private static void checkLeft(int[][] tempMap, Point point){
+        int nextW = point.y - 1;
         while(true){
-            int nextW = point.y - 1;
             if(nextW < 0 || tempMap[point.x][nextW] == 6) return;
             if(tempMap[point.x][nextW] == 0) tempMap[point.x][nextW] = 7;
+            nextW--;
         }
     }
     private static void checkRight(int[][] tempMap, Point point){
+        int nextW = point.y + 1;
         while(true){
-            int nextW = point.y + 1;
             if(nextW >= tempMap[0].length || tempMap[point.x][nextW] == 6) return;
             if(tempMap[point.x][nextW] == 0) tempMap[point.x][nextW] = 7;
+            nextW++;
         }
     }
     private static void checkUp(int[][] tempMap, Point point){
+        int nextX = point.x + 1;
         while(true){
-            int nextX = point.x + 1;
             if(nextX >= tempMap.length || tempMap[nextX][point.y] == 6) return;
             if(tempMap[nextX][point.y] == 0) tempMap[nextX][point.y] = 7;
+            nextX++;
         }
     }
     private static void checkDown(int[][] tempMap, Point point){
+        int nextX = point.x - 1;
         while(true){
-            int nextX = point.x - 1;
             if(nextX < 0 || tempMap[nextX][point.y] == 6) return;
             if(tempMap[nextX][point.y] == 0) tempMap[nextX][point.y] = 7;
+            nextX--;
         }
     }
 }
