@@ -8,7 +8,7 @@ import java.util.*;
 public class Num16236_Shark {
     static int[][] map;
     static int[] dx ={0,0,1,-1}, dy={1,-1,0,0};
-    static List<Node> nextFishes;
+    static List<Node>   nextFishes;
     private static class Node implements Comparable<Node>{
         int h;
         int w;
