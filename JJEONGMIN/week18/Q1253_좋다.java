@@ -24,7 +24,7 @@ public class Q1253_좋다 {
         for(int i=0; i<list.size(); i++){
             if(binarySearch(0, list.size()-1,list.get(i), i)) count++;
         }
-        System.out.println(count);asdf
+        System.out.println(count);
     }
     public static boolean binarySearch(int start, int end, int key, int index){
         while(start < end) {
