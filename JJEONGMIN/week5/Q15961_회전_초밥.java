@@ -5,6 +5,7 @@ import java.util.*;
 
 public class Q15961_회전_초밥 {
     static List<Integer> list = new ArrayList<>();
+    static Map<Integer, Integer> event = new HashMap<>();
     static int c, answer=Integer.MIN_VALUE;
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -23,25 +24,29 @@ public class Q15961_회전_초밥 {
             int num = Integer.parseInt(br.readLine());
             list.add(num);
         }
-        for(int i=0; i<k-1; i++){
-            list.add(list.get(i));
+        for(int i=0; i<k; i++){
+            event.put(list.get(i), event.getOrDefault(list.get(i), 0) + 1);
         }
         twoPointer(0, k-1);
         System.out.println(answer);
     }
     private static void twoPointer(int start, int end){
-        Set<Integer> set = new HashSet<>();
-        for(int i=start; i<end+1; i++){
-            set.add(list.get(i));
-        }
-        int size = set.size();
-        while(end != list.size()){
-
-            if(!set.contains(c)) size++;
-            answer = Math.max(answer, size);
+        while(start < list.size()){
+            updateResult();
+            event.put(list.get(start), event.getOrDefault(list.get(start), 0) - 1);
+            if (event.get(list.get(start)) == 0) {
+                event.remove(list.get(start));
+            }
             start++;
             end++;
+            if(end == list.size()) end = 0;
+            event.put(list.get(end), event.getOrDefault(list.get(end), 0) + 1);
         }
+    }
+    public static void updateResult(){
+        int size = event.size();
+        if(!event.containsKey(c)) size++;
+        answer = Math.max(answer, size);
     }
 }
 
