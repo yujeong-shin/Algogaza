@@ -15,7 +15,7 @@ public class Q2253_점프 {
         stones = new int[N+1];
         smallList = new int[N+1];
 
-        st = new StringTokenizer(br.readLine());
+         st = new StringTokenizer(br.readLine());
         for(int i=0; i<M; i++){
             int a = Integer.parseInt(st.nextToken());
             smallList[a] = 2;
